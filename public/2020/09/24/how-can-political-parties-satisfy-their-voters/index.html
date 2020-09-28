@@ -1,12 +1,78 @@
----
-title: "How Can Political Parties Satisfy their Voters?"
-author: "Timothy Regis"
-date: 2020-09-24T21:13:14-05:00
-bibliography: "references1.bib"
-categories: ["R"]
-tags: ["R Markdown", "cesR", "Voter Satisfaction"]
----
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.75.1" />
 
+
+<title>How Can Political Parties Satisfy their Voters? - How Can Political Parties Satisfy their Voters?</title>
+<meta property="og:title" content="How Can Political Parties Satisfy their Voters? - How Can Political Parties Satisfy their Voters?">
+
+
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">19 min read</span>
+    
+
+    <h1 class="article-title">How Can Political Parties Satisfy their Voters?</h1>
+
+    
+    <span class="article-date">2020-09-24</span>
+    
+
+    <div class="article-content">
+      
 
 
 <div id="authors" class="section level1">
@@ -129,7 +195,7 @@ table(ces2015_web_wrk$vote_for)
   labs(title = &#39;Number of Voters for Each Party&#39;, x = &#39;Political Party&#39;, y = &#39;Number of Voters&#39;) + 
   theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-7"></span>
-<img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-7-1.png" alt="Graph 0.1" width="672" />
+<img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-7-1.png" alt="Graph 0.1" width="672" />
 <p class="caption">
 Figure 1: Graph 0.1
 </p>
@@ -145,7 +211,7 @@ Figure 1: Graph 0.1
   labs(title = &#39;Importance of Education to Voters&#39;, x = &#39;Attention to Education in the Country&#39;, y = &#39;Number of Voters&#39;) + 
   theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-8"></span>
-<img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-8-1.png" alt="Graph 1.1" width="672" />
+<img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-8-1.png" alt="Graph 1.1" width="672" />
 <p class="caption">
 Figure 2: Graph 1.1
 </p>
@@ -159,7 +225,7 @@ Figure 2: Graph 1.1
   labs(title = &#39;Education Spending Recommendations by Voters&#39;, x = &#39;How should the Govt. Spend on Education &#39;, y = &#39;Number of Voters&#39;) + 
   theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-9"></span>
-<img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-9-1.png" alt="Graph 1.2" width="672" />
+<img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-9-1.png" alt="Graph 1.2" width="672" />
 <p class="caption">
 Figure 3: Graph 1.2
 </p>
@@ -173,7 +239,7 @@ Policies such as; increasing the amount of money paid out by education plans lik
   labs(title = &#39;Importance of the Environment to Voters&#39;, x = &#39;Attention to the Environment in the Country&#39;, y = &#39;Number of Voters&#39;) + 
   theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-10"></span>
-<img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-10-1.png" alt="Graph 2.1" width="672" />
+<img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-10-1.png" alt="Graph 2.1" width="672" />
 <p class="caption">
 Figure 4: Graph 2.1
 </p>
@@ -187,7 +253,7 @@ Figure 4: Graph 2.1
   labs(title = &#39;Environmental Spending Recommendations by Voters&#39;, x = &#39;How should the Govt. Spend on the Environment&#39;, y = &#39;Number of Voters&#39;) + 
   theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-11"></span>
-<img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-11-1.png" alt="Graph 2.2" width="672" />
+<img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-11-1.png" alt="Graph 2.2" width="672" />
 <p class="caption">
 Figure 5: Graph 2.2
 </p>
@@ -201,7 +267,7 @@ Thus, it is suggested that the Liberal and NDP parties dedicate a larger portion
   labs(title = &#39;Importance of Health Care to Voters&#39;, x = &#39;Attention to Health Care in the Country&#39;, y = &#39;Number of Voters&#39;) + 
   theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-12"></span>
-<img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-12-1.png" alt="Graph 3.1" width="672" />
+<img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-12-1.png" alt="Graph 3.1" width="672" />
 <p class="caption">
 Figure 6: Graph 3.1
 </p>
@@ -214,7 +280,7 @@ Based on this outcome, policymakers are suggested to address health care in the 
   labs(title = &#39;Health Care Spending Recommendations by Voters&#39;, x = &#39;How should the Govt. Spend on Education &#39;, y = &#39;Number of Voters&#39;) + 
   theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-13"></span>
-<img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-13-1.png" alt="Graph 3.2" width="672" />
+<img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-13-1.png" alt="Graph 3.2" width="672" />
 <p class="caption">
 Figure 7: Graph 3.2
 </p>
@@ -301,3 +367,47 @@ devtools: Tools to Make Developing R Packages Easier.
 </div>
 </div>
 </div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
