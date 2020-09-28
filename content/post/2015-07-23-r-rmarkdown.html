@@ -12,12 +12,6 @@ tags: ["R Markdown", "cesR", "Voter Satisfaction"]
 <div id="authors" class="section level1">
 <h1>Author(s)</h1>
 <p>Timothy Jordan Regis</p>
-<pre class="r"><code>library(tidyverse)
-library(visdat)
-library(skimr)
-library(cesR)
-library(labelled)
-library(ggplot2)</code></pre>
 </div>
 <div id="abstract" class="section level1">
 <h1>Abstract</h1>
@@ -32,8 +26,7 @@ The data gathered was the ces2015_web study from the cesR package. After some fi
 </div>
 <div id="data-identification" class="section level1">
 <h1>Data Identification</h1>
-<pre class="r"><code>get_cescodes()
-##    index ces_survey_code get_ces_call_char
+<pre><code>##    index ces_survey_code get_ces_call_char
 ## 1      1     ces2019_web     &quot;ces2019_web&quot;
 ## 2      2   ces2019_phone   &quot;ces2019_phone&quot;
 ## 3      3     ces2015_web     &quot;ces2015_web&quot;
@@ -56,14 +49,8 @@ The data gathered was the ces2015_web study from the cesR package. After some fi
 ## 20    20       ces72_nov       &quot;ces72_nov&quot;
 ## 21    21         ces1968         &quot;ces1968&quot;
 ## 22    22         ces1965         &quot;ces1965&quot;</code></pre>
-<p>From the list of available ces studies, we chose ces2015_web as the study for this paper, this was mainly due to the rich variety of questions answered in this survey.</p>
-<pre class="r"><code>get_ces(&#39;ces2015_web&#39;)
-## TO CITE THIS SURVEY FILE: Fournier, Patrick, Fred Cutler, Stuart Soroka and Dietlind Stolle. 2015. The 2015 Canadian Election Study. [dataset]
-## 
-## LINK: https://ces-eec.arts.ubc.ca/english-section/surveys/</code></pre>
-<pre class="r"><code>ces2015_web &lt;- to_factor(ces2015_web)
-head(ces2015_web)
-## # A tibble: 6 x 580
+<p>From the list of available ces studies, we chose ces2015_web as the study for this paper, this was mainly due to the rich variety of questions answered in this survey. The results for this survey are displayed below.</p>
+<pre><code>## # A tibble: 6 x 580
 ##   start               finish              survey_language duration date      
 ##   &lt;dttm&gt;              &lt;dttm&gt;              &lt;fct&gt;           &lt;chr&gt;    &lt;date&gt;    
 ## 1 2015-08-18 07:39:22 2015-08-18 08:23:23 English Survey  2640     2015-08-18
@@ -115,10 +102,8 @@ Should the federal government spend more, less, or about the same amount of mone
 Should the federal government spend more, less, or about the same amount of money on education?
 Should the federal government spend more, less, or about the same amount of money on the environment?</p>
 <p>I felt that these questions were of high importance on a nationwide level and that policies regarding them would be most likely to draw in voters due to this importance, thus these are the questions we will progress with for this study.</p>
-<pre class="r"><code>ces2015_web_wrk &lt;- ces2015_web %&gt;%
-  filter(vote_for %in% c(&#39;The Conservative Party&#39;, &#39;The Liberal Party&#39;, &#39;The New Democratic Party&#39;))
-table(ces2015_web_wrk$vote_for)
-## 
+<p>Examining Number of Voters for Each Party.</p>
+<pre><code>## 
 ##   The Conservative Party        The Liberal Party The New Democratic Party 
 ##                     1135                     1383                     1398 
 ##       The Bloc Québécois          The Green Party              Other Party 
@@ -127,11 +112,6 @@ table(ces2015_web_wrk$vote_for)
 ##                        0                        0                        0 
 ##         Refuse to Answer       Don&#39;t Know/Refused    Seen But Not Answered 
 ##                        0                        0                        0</code></pre>
-<pre class="r"><code>ces2015_web_wrk %&gt;% 
-  ggplot(aes(x = vote_for)) + 
-  geom_bar() + 
-  labs(title = &#39;Number of Voters for Each Party&#39;, x = &#39;Political Party&#39;, y = &#39;Number of Voters&#39;) + 
-  theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-7"></span>
 <img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-7-1.png" alt="Graph 0.1" width="672" />
 <p class="caption">
@@ -143,11 +123,6 @@ Figure 1: Graph 0.1
 <div id="exploratory-data-analysis" class="section level1">
 <h1>Exploratory Data Analysis</h1>
 <p>In this section, we will be analyzing the responses to our selected questions through multiple grouped bar graphs and attempting to determine which of these issues are most important to the voters of each party and how they would like them to be addressed.</p>
-<pre class="r"><code>ces2015_web_wrk %&gt;%
-  ggplot(aes(x = attn_educ, fill = vote_for)) + 
-  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;) + 
-  labs(title = &#39;Importance of Education to Voters&#39;, x = &#39;Attention to Education in the Country&#39;, y = &#39;Number of Voters&#39;) + 
-  theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-8"></span>
 <img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-8-1.png" alt="Graph 1.1" width="672" />
 <p class="caption">
@@ -157,11 +132,6 @@ Figure 2: Graph 1.1
 <p>In our first graph, we examine responses to question attn_educ; ‘How much attention do you pay to education?’ As will be the case with the majority of these graphs, our data appear to be heavily grouped at the first three responses, a lot, a little, and none, which was to be expected.</p>
 <p>Organized first by their response, and second by the political party they intend to vote for, this grouped bar graph displays the quantity of each response recorded by the voters of each party. The political parties being voted for are identified by color, with red representing the Conservative party, green representing the Liberal party, and blue representing the New Democratic party.</p>
 <p>As we can see, those who voted for the Liberal party and the New Democratic party responded saying they paid a lot of attention to education in the country in a higher proportion than those who vote for the Conservative party as we notice more of them responding with only a little attention paid to education. This suggests to us that both the Liberal party and the New Democratic party should focus their power toward addressing the education system in Canada as this could seriously benefit voter satisfaction. On the other hand, the mixed results of Conservative voters indicate that policies regarding Canada’s education system would not be most effective at spurring voter satisfaction.</p>
-<pre class="r"><code>ces2015_web_wrk %&gt;%
-  ggplot(aes(x = spnd_educ, fill = vote_for)) + 
-  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;) + 
-  labs(title = &#39;Education Spending Recommendations by Voters&#39;, x = &#39;How should the Govt. Spend on Education &#39;, y = &#39;Number of Voters&#39;) + 
-  theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-9"></span>
 <img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-9-1.png" alt="Graph 1.2" width="672" />
 <p class="caption">
@@ -171,11 +141,6 @@ Figure 3: Graph 1.2
 <p>(Options Along X-Axis: ‘Spend More’, ‘Spend Less’, ‘Spend About the Same as Now’, ‘Don’t Know’, ‘Refuse to Answer’, ‘Seen But Not Answered’, ‘NA’ )</p>
 <p>When we plot the results to the question ‘Should the federal government spend more, less, or about the same amount of money on education?’ it becomes much more clear what type of policies each party should enact. Due to the high proportion of Liberal and NDP voters that encourage more spending on the education system, it is highly recommended that, upon election, these parties focus a portion of their spending on the education system to better satisfy the needs of their voters.
 Policies such as; increasing the amount of money paid out by education plans like OSAP, building new schools, or renovating older schools have the ability to highly increase voter satisfaction, benefiting their chances of reelection.</p>
-<pre class="r"><code>ces2015_web_wrk %&gt;%
-  ggplot(aes(x = attn_envi, fill = vote_for)) + 
-  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;) + 
-  labs(title = &#39;Importance of the Environment to Voters&#39;, x = &#39;Attention to the Environment in the Country&#39;, y = &#39;Number of Voters&#39;) + 
-  theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-10"></span>
 <img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-10-1.png" alt="Graph 2.1" width="672" />
 <p class="caption">
@@ -185,11 +150,6 @@ Figure 4: Graph 2.1
 <p>Our next graph displays the results to the question attn_envi; ‘How much attention do you pay to the environment?’ in a similar fashion to the first graph wherein voters were organized by both their response to this question, as well as vote_for; “Which party do you think you will vote for?”</p>
 <p>The results suggest to us a couple of things regarding each party; those voting for the Liberal party are quite mixed in their attention to the environment in the Country, NDP voters more often expressed a lot of attention to the environment, and Conservative voters most often displayed a little attention to the environment.</p>
 <p>These results can help to guide politicians and policymakers of each party when deciding on what policies to enact when elected. For example, given the turnout for Conservative Voters, the Conservative party should not, upon election, announce a new and large carbon tax policy on non-electric vehicles, as this would not be effective at keeping voter satisfaction high.</p>
-<pre class="r"><code>ces2015_web_wrk %&gt;%
-  ggplot(aes(x = spnd_envi, fill = vote_for)) + 
-  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;) + 
-  labs(title = &#39;Environmental Spending Recommendations by Voters&#39;, x = &#39;How should the Govt. Spend on the Environment&#39;, y = &#39;Number of Voters&#39;) + 
-  theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-11"></span>
 <img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-11-1.png" alt="Graph 2.2" width="672" />
 <p class="caption">
@@ -199,11 +159,6 @@ Figure 5: Graph 2.2
 <p>In this graph we present the responses to the question spnd_envi; ‘Should the federal government spend more, less, or about the same amount of money on the environment?’ and given the responses to our question about the attention paid to the environment, this outcome was expected.
 As can be seen, both the Liberal party and the New Democratic party have the majority of their voters advocating for more spending in the environment sector whereas Conservative voters appear most often to suggest that roughly the same amount should be spent on the environment from past years.
 Thus, it is suggested that the Liberal and NDP parties dedicate a larger portion of their spending toward benefiting the environment in Canada. For example, a project encouraging the use of renewable energy resources such as implementing a federal tax credit for people who purchase electric vehicles could be a powerful method of increasing voter satisfaction for the party.</p>
-<pre class="r"><code>ces2015_web_wrk %&gt;%
-  ggplot(aes(x = attn_heal, fill = vote_for)) + 
-  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;) + 
-  labs(title = &#39;Importance of Health Care to Voters&#39;, x = &#39;Attention to Health Care in the Country&#39;, y = &#39;Number of Voters&#39;) + 
-  theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-12"></span>
 <img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-12-1.png" alt="Graph 3.1" width="672" />
 <p class="caption">
@@ -212,11 +167,6 @@ Figure 6: Graph 3.1
 </div>
 <p>In this graph, results for the question attn_heal; ‘How much attention do you pay to health care?’ are displayed for each party. As is apparent, health care is of extremely high importance to voters in each party as all of them feature the most votes for a lot of attention paid to health care. This is not a surprising result at all however, as no matter how you vote, you will always need sufficient access to health care facilities to ensure that you can remain healthy throughout your life.
 Based on this outcome, policymakers are suggested to address health care in the country no matter what party they represent due to its high priority in the minds of voters.</p>
-<pre class="r"><code>ces2015_web_wrk %&gt;%
-  ggplot(aes(x = spnd_hlth, fill = vote_for)) + 
-  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;) + 
-  labs(title = &#39;Health Care Spending Recommendations by Voters&#39;, x = &#39;How should the Govt. Spend on Education &#39;, y = &#39;Number of Voters&#39;) + 
-  theme_minimal()</code></pre>
 <div class="figure"><span id="fig:unnamed-chunk-13"></span>
 <img src="/post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-13-1.png" alt="Graph 3.2" width="672" />
 <p class="caption">
@@ -228,8 +178,8 @@ Figure 7: Graph 3.2
 </div>
 <div id="conclusion-discussion" class="section level1">
 <h1>Conclusion &amp; Discussion</h1>
-<p>From this analysis, we can begin to gain an understanding of what issues are most important to the Canadian voters of these three political parties. It appears that for NDP voters, they pay great attention to all three categories; education, the environment, and health care while also advocating for increased funding in all of these sectors. Liberal party voters expressed paying a lot of attention to both education and health care, while their attention to the environment appears mixed between a lot and a little attention paid. Despite this, Liberal voters indicated most often that they would like to see an increase in spending across all fields studied here. This can suggest that, while providing additional funding to the environment sector will likely increase voter satisfaction for the Liberal party, it would not be as effective at doing so as providing funding to either the education or health care sectors in the country. Finally, Conservative party voters seemed to be mixed between a lot and a little in their level of attention paid to both education and the environment. When it comes to funding, Conservative voters appeared mixed between spending more or about the same on education and showed more of a desire to keep funding for the environment at the level it is. It should be noted, however, when compared to the other voters’ responses, taking into account the fact that there is a smaller pool of conservative voters, a relatively large proportion of Conservative voters suggested that funding for the environment be cut down. However, much like the other two parties, voters for the Conservative party expressed a lot of attention toward health care in Canada with the majority of them suggesting increased funding in this sector.</p>
-<p>With further research on this study and the other ces datasets, these conclusions can help policymakers determine which policies they can enact to result in the greatest level of voter satisfaction. By paying most attention to the things voters pay attention to and the actions they suggest in the survey.</p>
+<p>From this analysis, we can begin to gain an understanding of what issues are most important to the Canadian voters of these three political parties. It appears that for NDP voters, they pay great attention to all three categories; education, the environment, and health care while also advocating for increased funding in all of these sectors. Liberal party voters expressed paying a lot of attention to both education and health care, while their attention to the environment appears mixed between a lot and a little attention paid. Despite this, Liberal voters indicated most often that they would like to see an increase in spending across all fields studied here. This can suggest that, while providing additional funding to the environment sector will likely increase voter satisfaction for the Liberal party, it would not be as effective at doing so as providing funding to either the education or health care sectors in the country. Finally, Conservative party voters seemed to be mixed between a lot and a little in their level of attention paid to both education and the environment. When it comes to funding, Conservative voters appeared mixed between spending more or about the same on education and showed more of a desire to keep funding for the environment at the level it is. It should be noted, however, when compared to the other voters’ responses, taking into account the fact that there is a smaller pool of conservative voters, a relatively large proportion of Conservative voters suggested that funding for the environment be cut down. However, much like the other two parties, voters for the Conservative party expressed a lot of attention toward health care in Canada with the majority of them suggesting increased funding in this sector. By paying the most attention to the things voters pay attention to and the actions they suggest in the survey, political parties can hope to steadily increase voter satisfaction, aiding them in the reelection process.</p>
+<p>With further research on this study and the other ces datasets, these conclusions can help policymakers determine, definitively, which policies they can enact to result in the greatest level of voter satisfaction.</p>
 </div>
 <div id="limitations" class="section level1">
 <h1>Limitations</h1>
@@ -237,8 +187,11 @@ Figure 7: Graph 3.2
 Aside from falsified answers to the survey, questions like ‘how much attention do you pay to the environment’ can be quite vague and possibly result in a number of people answering the question in different ways leading to inconsistent answers. Furthermore, the number of questions that were unanswered by voters also makes it extremely difficult to get a full picture of what voters of each political party most want.</p>
 <p>Further data cleaning could have been conducted such as removing responses like ‘Seen but not answered’ to help to make the displays of data appear more full. Additionally, I would have liked to avoid the overlapping of bar names for my graphs as I felt it took a great deal away from the study by leaving it to look extremely cluttered.
 Additional factors I could have selected from the ces2015_web could have helped provide more insight into what is most important to voters and what policymakers should focus on. It would have been useful to cover more questions due to the lack of important information gained regarding what policies the Conservative party should focus on. For example, choosing another topic such as views on immigration or crime rates may have allowed for me to make another suggestion as to how the Conservative party can gain voter satisfaction.
-It would have been very nice to be able to study the ces2019_web data due to its more recent results, however, due to some error I must have made while loading and cleaning the data for it I became unable to access it. Regardless, I feel that the ces2015_web data should still provide a clear indication of what voters consider important and what they feel should be done about it.
-Lastly, with better planning, I could have created an appendix using GitHub that contained all the coding in this study so that reproducibility was as easy as possible. This would have allowed the paper to flow much better without being interrupted by large coding chunks making the reading a lot easier.</p>
+It would have been very nice to be able to study the ces2019_web data due to its more recent results, however, due to some error I must have made while loading and cleaning the data for it I became unable to access it. Regardless, I feel that the ces2015_web data should still provide a clear indication of what voters consider important and what they feel should be done about it.</p>
+</div>
+<div id="appendix" class="section level1">
+<h1>Appendix</h1>
+<p>Code for this study can be found at: <a href="https://github.com/jordanregis/TJRProjCode/blob/master/TJRProjCode.Rmd" class="uri">https://github.com/jordanregis/TJRProjCode/blob/master/TJRProjCode.Rmd</a></p>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
@@ -274,11 +227,7 @@ Springer-Verlag New York, 2016.</p>
 devtools: Tools to Make Developing R Packages Easier.
 <a href="https://devtools.r-lib.org/" class="uri">https://devtools.r-lib.org/</a>,
 <a href="https://github.com/r-lib/devtools" class="uri">https://github.com/r-lib/devtools</a>.</p>
-</div>
-<div id="appendix" class="section level1">
-<h1>Appendix</h1>
-<p>Code for this study can be found at: <a href="https://github.com/jordanregis/TJRProjCode/blob/master/TJRProjCode.Rmd" class="uri">https://github.com/jordanregis/TJRProjCode/blob/master/TJRProjCode.Rmd</a>
-However, it was also displayed throughout the study due to my lack of knowledge working with GitHub repositories and general level of unsureness about whether or not it worked properly. Sorry!</p>
+<p>(Note: It appears that below this line, the references have repeated themselves for a reason I could not work out)</p>
 <div id="refs" class="references">
 <div id="ref-citecesR">
 <p>Hodgetts, Paul A., and Rohan Alexander. 2020. <em>CesR: Access the Ces Datasets a Little Easier.</em></p>
