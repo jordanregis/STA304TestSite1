@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.75.1" />
+
+
+<title>Tim&#39;s First Try - Tim&#39;s First Try</title>
+<meta property="og:title" content="Tim&#39;s First Try - Tim&#39;s First Try">
+
+
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">5 min read</span>
+    
+
+    <h1 class="article-title">Tim&#39;s First Try</h1>
+
+    
+    <span class="article-date">2015-07-23</span>
+    
+
+    <div class="article-content">
+      
+
+
+<div id="abstract" class="section level1">
+<h1>Abstract</h1>
+</div>
+<div id="intro" class="section level1">
+<h1>Intro</h1>
+<p>Intro</p>
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>What we use</p>
+</div>
+<div id="all" class="section level1">
+<h1>all</h1>
+<pre class="r"><code>library(tidyverse)
+library(visdat)
+library(skimr)
+library(cesR)
+library(labelled)</code></pre>
+<pre class="r"><code># devtools::install_github(&quot;hodgettsp/cesR&quot;)</code></pre>
+<pre class="r"><code>get_cescodes()
+##    index ces_survey_code get_ces_call_char
+## 1      1     ces2019_web     &quot;ces2019_web&quot;
+## 2      2   ces2019_phone   &quot;ces2019_phone&quot;
+## 3      3     ces2015_web     &quot;ces2015_web&quot;
+## 4      4   ces2015_phone   &quot;ces2015_phone&quot;
+## 5      5   ces2015_combo   &quot;ces2015_combo&quot;
+## 6      6         ces2011         &quot;ces2011&quot;
+## 7      7         ces2008         &quot;ces2008&quot;
+## 8      8         ces2004         &quot;ces2004&quot;
+## 9      9         ces0411         &quot;ces0411&quot;
+## 10    10         ces0406         &quot;ces0406&quot;
+## 11    11         ces2000         &quot;ces2000&quot;
+## 12    12         ces1997         &quot;ces1997&quot;
+## 13    13         ces1993         &quot;ces1993&quot;
+## 14    14         ces1988         &quot;ces1988&quot;
+## 15    15         ces1984         &quot;ces1984&quot;
+## 16    16         ces1974         &quot;ces1974&quot;
+## 17    17         ces7480         &quot;ces7480&quot;
+## 18    18      ces72_jnjl      &quot;ces72_jnjl&quot;
+## 19    19       ces72_sep       &quot;ces72_sep&quot;
+## 20    20       ces72_nov       &quot;ces72_nov&quot;
+## 21    21         ces1968         &quot;ces1968&quot;
+## 22    22         ces1965         &quot;ces1965&quot;</code></pre>
+<pre class="r"><code>get_ces(&#39;ces2015_web&#39;)
+## TO CITE THIS SURVEY FILE: Fournier, Patrick, Fred Cutler, Stuart Soroka and Dietlind Stolle. 2015. The 2015 Canadian Election Study. [dataset]
+## 
+## LINK: https://ces-eec.arts.ubc.ca/english-section/surveys/</code></pre>
+<pre class="r"><code>ces2015_web &lt;- to_factor(ces2015_web)
+head(ces2015_web)
+## # A tibble: 6 x 580
+##   start               finish              survey_language duration date      
+##   &lt;dttm&gt;              &lt;dttm&gt;              &lt;fct&gt;           &lt;chr&gt;    &lt;date&gt;    
+## 1 2015-08-18 07:39:22 2015-08-18 08:23:23 English Survey  2640     2015-08-18
+## 2 2015-10-02 05:32:29 2015-10-02 05:37:35 English Survey  305      2015-10-02
+## 3 2015-09-11 06:48:56 2015-09-11 07:01:56 English Survey  779      2015-09-11
+## 4 2015-09-26 16:28:22 2015-09-26 16:36:48 English Survey  505      2015-09-26
+## 5 2015-08-18 07:36:11 2015-08-18 07:48:13 English Survey  721      2015-08-18
+## 6 2015-09-16 06:44:12 2015-09-16 06:54:05 English Survey  592      2015-09-16
+## # … with 575 more variables: complete &lt;dbl&gt;, rdm_vote &lt;chr&gt;,
+## #   rdm_like_pos &lt;dbl&gt;, rdm_think_id &lt;dbl&gt;, rdm_iss &lt;fct&gt;, respID &lt;chr&gt;,
+## #   browser_name &lt;chr&gt;, browser_version &lt;chr&gt;, browser_os &lt;chr&gt;,
+## #   browser_agent &lt;chr&gt;, sex_r &lt;fct&gt;, province &lt;fct&gt;, demsat &lt;fct&gt;,
+## #   imp_issue_TEXT &lt;chr&gt;, attn_heal &lt;fct&gt;, attn_welf &lt;fct&gt;, attn_educ &lt;fct&gt;,
+## #   attn_envi &lt;fct&gt;, attn_crim &lt;fct&gt;, attn_defn &lt;fct&gt;, attn_immg &lt;fct&gt;,
+## #   attn_check &lt;fct&gt;, interest &lt;fct&gt;, isslist_unem &lt;dbl&gt;, isslist_free &lt;dbl&gt;,
+## #   isslist_mili &lt;dbl&gt;, isslist_hlth &lt;dbl&gt;, isslist_abor &lt;dbl&gt;,
+## #   isslist_corr &lt;dbl&gt;, isslist_terr &lt;dbl&gt;, isslist_sena &lt;dbl&gt;,
+## #   isslist_rate &lt;dbl&gt;, isslist_elec &lt;dbl&gt;, isslist_abol &lt;dbl&gt;,
+## #   isslist_pipe &lt;dbl&gt;, isslist_qsov &lt;dbl&gt;, isslist_envi &lt;dbl&gt;,
+## #   isslist_ppow &lt;dbl&gt;, isslist_debt &lt;dbl&gt;, isslist_taxe &lt;dbl&gt;,
+## #   isslist_immg &lt;dbl&gt;, isslist_gunc &lt;dbl&gt;, isslist_dayc &lt;dbl&gt;,
+## #   isslist_pove &lt;dbl&gt;, isslist_econ &lt;dbl&gt;, isslist_othe &lt;dbl&gt;,
+## #   isslist_othe_TEXT &lt;chr&gt;, isscare_unem &lt;dbl&gt;, isscare_free &lt;dbl&gt;,
+## #   isscare_mili &lt;dbl&gt;, isscare_hlth &lt;dbl&gt;, isscare_abor &lt;dbl&gt;,
+## #   isscare_corr &lt;dbl&gt;, isscare_terr &lt;dbl&gt;, isscare_sena &lt;dbl&gt;,
+## #   isscare_rate &lt;dbl&gt;, isscare_elec &lt;dbl&gt;, isscare_abol &lt;dbl&gt;,
+## #   isscare_pipe &lt;dbl&gt;, isscare_qsov &lt;dbl&gt;, isscare_envi &lt;dbl&gt;,
+## #   isscare_ppow &lt;dbl&gt;, isscare_debt &lt;dbl&gt;, isscare_taxe &lt;dbl&gt;,
+## #   isscare_immg &lt;dbl&gt;, isscare_gunc &lt;dbl&gt;, isscare_dayc &lt;dbl&gt;,
+## #   isscare_pove &lt;dbl&gt;, isscare_econ &lt;dbl&gt;, isscare_othe &lt;dbl&gt;,
+## #   isscare_othe_TEXT &lt;chr&gt;, lklytovote &lt;fct&gt;, vote_for &lt;fct&gt;, vote_oth &lt;chr&gt;,
+## #   vote_lean &lt;fct&gt;, vote_for_if &lt;fct&gt;, vtunlik_ln &lt;fct&gt;, voted_for &lt;fct&gt;,
+## #   voted_oth &lt;chr&gt;, vote_secon &lt;fct&gt;, notvote &lt;fct&gt;, sat_govt &lt;fct&gt;,
+## #   ptfeel_cons &lt;dbl&gt;, ptfeel_libs &lt;dbl&gt;, ptfeel_ndp &lt;dbl&gt;, ptfeel_bq &lt;dbl&gt;,
+## #   ptfeel_green &lt;dbl&gt;, ldrfeel_hrpr &lt;dbl&gt;, ldrfeel_trud &lt;dbl&gt;,
+## #   ldrfeel_mulc &lt;dbl&gt;, ldrfeel_ducp &lt;dbl&gt;, ldrfeel_may &lt;dbl&gt;, taxes &lt;fct&gt;,
+## #   taxes_200 &lt;fct&gt;, taxes_40 &lt;fct&gt;, taxes_corp &lt;fct&gt;, spnd_hlth &lt;fct&gt;,
+## #   spnd_welf &lt;fct&gt;, spnd_educ &lt;fct&gt;, spnd_envi &lt;fct&gt;, …</code></pre>
+<pre class="r"><code>ces2015_web_wrk_Con &lt;- ces2015_web  %&gt;%
+  filter(vote_for == &#39;The Conservative Party&#39;)
+
+ces2015_web_wrk_Lib &lt;- ces2015_web %&gt;%
+  filter(vote_for == &#39;The Liberal Party&#39;)
+
+ces2015_web_wrk_Dem &lt;- ces2015_web %&gt;%
+  filter(vote_for == &#39;The New Democratic Party&#39;)</code></pre>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_educ)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_educ)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_educ)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-7-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_envi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_envi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_envi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-8-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_immg)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_immg)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_immg)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-9-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_heal)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_heal)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_heal)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-10-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_crim)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_crim)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_crim)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-11-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_defn)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_defn)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_defn)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-12-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = p_iss_immg)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = p_iss_immg)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = p_iss_immg)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-13-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  filter(p_pos_mino &lt; 101) %&gt;%
+  ggplot(aes(x = p_pos_mino)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  filter(p_pos_mino &lt; 101) %&gt;%
+  ggplot(aes(x = p_pos_mino)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  filter(p_pos_mino &lt; 101) %&gt;%
+  ggplot(aes(x = p_pos_mino)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-14-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = religion)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = religion)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = religion)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-15-3.png" width="672" /></p>
+<p>Discussion</p>
+</div>
+<div id="r-markdown" class="section level1">
+<h1>R Markdown</h1>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>You can embed an R code chunk like this:</p>
+<pre class="r"><code>summary(cars)
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+fit &lt;- lm(dist ~ speed, data = cars)
+fit
+## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932</code></pre>
+</div>
+<div id="including-plots" class="section level1">
+<h1>Including Plots</h1>
+<p>You can also embed plots. See Figure <a href="#fig:pie">1</a> for example:</p>
+<pre class="r"><code>par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c(&#39;Sky&#39;, &#39;Sunny side of pyramid&#39;, &#39;Shady side of pyramid&#39;),
+  col = c(&#39;#0292D8&#39;, &#39;#F7EA39&#39;, &#39;#C4B632&#39;),
+  init.angle = -50, border = NA
+)</code></pre>
+<div class="figure"><span id="fig:pie"></span>
+<img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png" alt="A fancy pie chart." width="672" />
+<p class="caption">
+Figure 1: A fancy pie chart.
+</p>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.75.1" />
+
+
+<title>How Well do Political Parties Satisfy their Voters? - Tim&#39;s First Try</title>
+<meta property="og:title" content="How Well do Political Parties Satisfy their Voters? - Tim&#39;s First Try">
+
+
+  <link href='../../../../favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">12 min read</span>
+    
+
+    <h1 class="article-title">How Well do Political Parties Satisfy their Voters?</h1>
+
+    
+    <span class="article-date">2020-09-27</span>
+    
+
+    <div class="article-content">
+      
+
+
+<pre class="r"><code>library(tidyverse)
+library(visdat)
+library(skimr)
+library(cesR)
+library(labelled)</code></pre>
+<div id="tmrw-morn" class="section level1">
+<h1>TMRW MORN</h1>
+<p>Could talk about How CAN Political Parties Satisfy their Voters
+YES YES YES</p>
+<p>ADD FIGURE LABELS (IE Figure 1.1, Equation 1.2)</p>
+</div>
+<div id="abstract" class="section level1">
+<h1>Abstract</h1>
+<p>This paper analyzes the most important things to voters of the; Liberal, Conservative, and NDP political parties in Canada and compares them to what these political parties promise to accomplish if elected. FOUND FOUND FOUND FOUND FOUND FOUND FOUND FOUND FOUND FOUND FOUND FOUND
+This study is significant as voter satisfaction is extremely important in keeping elected parties in office for future terms.</p>
+</div>
+<div id="intro" class="section level1">
+<h1>Intro</h1>
+<p>When a new Prime Minister is elected, their party must review the promises they made while campaigning and decide which they will act upon and how they will fulfill them. These decisions play a key role in determining whether or not those who voted for the elected party remain satisfied for their term. Since voter satisfaction is integral for reelection, the candidates and their respective parties must pay a great deal of attention to the issues most important to their voters and focus their powers toward solving them if they hope to continue serving.</p>
+<p>Using the data from the Canadian Election Study gathered by cesR, this paper highlights the issues at the forefront of voters’ minds and how well they are addressed by the party they voted for. Additionally, these findings can be used to ???????????
+The data gathered was the ces2015_web study from the cesR package. After some filtering, the data was split into three groups according to each voters response to the question “Who are you likely to vote for?” with the groups being, NDP, Liberal, and Conservative voters. Then, bar graphs were created to display the frequency of voters’ responses to a variety of questions including; QUESTIONS QUESTIONS QUESTIONS QUESTIONS QUESTIONS.</p>
+<p>By studying the outcomes, we are able to gain an understanding of what issues voters of each party consider the most important. From this, we can compare the policies that each party promises to enact, (and in the case of the winning party, the policies that it actually enacts), with these voter responses to see how well they line up. This will allow us to determine how well these voters’ needs have been met by the party they vote for/intend to vote for.
+(((((((((((((people find most important given who they vote for)))))))))))</p>
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<pre class="r"><code># devtools::install_github(&quot;hodgettsp/cesR&quot;)</code></pre>
+<pre class="r"><code>get_cescodes()
+##    index ces_survey_code get_ces_call_char
+## 1      1     ces2019_web     &quot;ces2019_web&quot;
+## 2      2   ces2019_phone   &quot;ces2019_phone&quot;
+## 3      3     ces2015_web     &quot;ces2015_web&quot;
+## 4      4   ces2015_phone   &quot;ces2015_phone&quot;
+## 5      5   ces2015_combo   &quot;ces2015_combo&quot;
+## 6      6         ces2011         &quot;ces2011&quot;
+## 7      7         ces2008         &quot;ces2008&quot;
+## 8      8         ces2004         &quot;ces2004&quot;
+## 9      9         ces0411         &quot;ces0411&quot;
+## 10    10         ces0406         &quot;ces0406&quot;
+## 11    11         ces2000         &quot;ces2000&quot;
+## 12    12         ces1997         &quot;ces1997&quot;
+## 13    13         ces1993         &quot;ces1993&quot;
+## 14    14         ces1988         &quot;ces1988&quot;
+## 15    15         ces1984         &quot;ces1984&quot;
+## 16    16         ces1974         &quot;ces1974&quot;
+## 17    17         ces7480         &quot;ces7480&quot;
+## 18    18      ces72_jnjl      &quot;ces72_jnjl&quot;
+## 19    19       ces72_sep       &quot;ces72_sep&quot;
+## 20    20       ces72_nov       &quot;ces72_nov&quot;
+## 21    21         ces1968         &quot;ces1968&quot;
+## 22    22         ces1965         &quot;ces1965&quot;</code></pre>
+<p>From the list of available ces studies, we chose ces2015_web as the study for this paper, this was mainly due to the rich variety of questions anaswered in this survey.</p>
+<pre class="r"><code>ces2015_web &lt;- to_factor(ces2015_web)
+head(ces2015_web)
+## # A tibble: 6 x 580
+##   start               finish              survey_language duration date      
+##   &lt;dttm&gt;              &lt;dttm&gt;              &lt;fct&gt;           &lt;chr&gt;    &lt;date&gt;    
+## 1 2015-08-18 07:39:22 2015-08-18 08:23:23 English Survey  2640     2015-08-18
+## 2 2015-10-02 05:32:29 2015-10-02 05:37:35 English Survey  305      2015-10-02
+## 3 2015-09-11 06:48:56 2015-09-11 07:01:56 English Survey  779      2015-09-11
+## 4 2015-09-26 16:28:22 2015-09-26 16:36:48 English Survey  505      2015-09-26
+## 5 2015-08-18 07:36:11 2015-08-18 07:48:13 English Survey  721      2015-08-18
+## 6 2015-09-16 06:44:12 2015-09-16 06:54:05 English Survey  592      2015-09-16
+## # … with 575 more variables: complete &lt;dbl&gt;, rdm_vote &lt;chr&gt;,
+## #   rdm_like_pos &lt;dbl&gt;, rdm_think_id &lt;dbl&gt;, rdm_iss &lt;fct&gt;, respID &lt;chr&gt;,
+## #   browser_name &lt;chr&gt;, browser_version &lt;chr&gt;, browser_os &lt;chr&gt;,
+## #   browser_agent &lt;chr&gt;, sex_r &lt;fct&gt;, province &lt;fct&gt;, demsat &lt;fct&gt;,
+## #   imp_issue_TEXT &lt;chr&gt;, attn_heal &lt;fct&gt;, attn_welf &lt;fct&gt;, attn_educ &lt;fct&gt;,
+## #   attn_envi &lt;fct&gt;, attn_crim &lt;fct&gt;, attn_defn &lt;fct&gt;, attn_immg &lt;fct&gt;,
+## #   attn_check &lt;fct&gt;, interest &lt;fct&gt;, isslist_unem &lt;dbl&gt;, isslist_free &lt;dbl&gt;,
+## #   isslist_mili &lt;dbl&gt;, isslist_hlth &lt;dbl&gt;, isslist_abor &lt;dbl&gt;,
+## #   isslist_corr &lt;dbl&gt;, isslist_terr &lt;dbl&gt;, isslist_sena &lt;dbl&gt;,
+## #   isslist_rate &lt;dbl&gt;, isslist_elec &lt;dbl&gt;, isslist_abol &lt;dbl&gt;,
+## #   isslist_pipe &lt;dbl&gt;, isslist_qsov &lt;dbl&gt;, isslist_envi &lt;dbl&gt;,
+## #   isslist_ppow &lt;dbl&gt;, isslist_debt &lt;dbl&gt;, isslist_taxe &lt;dbl&gt;,
+## #   isslist_immg &lt;dbl&gt;, isslist_gunc &lt;dbl&gt;, isslist_dayc &lt;dbl&gt;,
+## #   isslist_pove &lt;dbl&gt;, isslist_econ &lt;dbl&gt;, isslist_othe &lt;dbl&gt;,
+## #   isslist_othe_TEXT &lt;chr&gt;, isscare_unem &lt;dbl&gt;, isscare_free &lt;dbl&gt;,
+## #   isscare_mili &lt;dbl&gt;, isscare_hlth &lt;dbl&gt;, isscare_abor &lt;dbl&gt;,
+## #   isscare_corr &lt;dbl&gt;, isscare_terr &lt;dbl&gt;, isscare_sena &lt;dbl&gt;,
+## #   isscare_rate &lt;dbl&gt;, isscare_elec &lt;dbl&gt;, isscare_abol &lt;dbl&gt;,
+## #   isscare_pipe &lt;dbl&gt;, isscare_qsov &lt;dbl&gt;, isscare_envi &lt;dbl&gt;,
+## #   isscare_ppow &lt;dbl&gt;, isscare_debt &lt;dbl&gt;, isscare_taxe &lt;dbl&gt;,
+## #   isscare_immg &lt;dbl&gt;, isscare_gunc &lt;dbl&gt;, isscare_dayc &lt;dbl&gt;,
+## #   isscare_pove &lt;dbl&gt;, isscare_econ &lt;dbl&gt;, isscare_othe &lt;dbl&gt;,
+## #   isscare_othe_TEXT &lt;chr&gt;, lklytovote &lt;fct&gt;, vote_for &lt;fct&gt;, vote_oth &lt;chr&gt;,
+## #   vote_lean &lt;fct&gt;, vote_for_if &lt;fct&gt;, vtunlik_ln &lt;fct&gt;, voted_for &lt;fct&gt;,
+## #   voted_oth &lt;chr&gt;, vote_secon &lt;fct&gt;, notvote &lt;fct&gt;, sat_govt &lt;fct&gt;,
+## #   ptfeel_cons &lt;dbl&gt;, ptfeel_libs &lt;dbl&gt;, ptfeel_ndp &lt;dbl&gt;, ptfeel_bq &lt;dbl&gt;,
+## #   ptfeel_green &lt;dbl&gt;, ldrfeel_hrpr &lt;dbl&gt;, ldrfeel_trud &lt;dbl&gt;,
+## #   ldrfeel_mulc &lt;dbl&gt;, ldrfeel_ducp &lt;dbl&gt;, ldrfeel_may &lt;dbl&gt;, taxes &lt;fct&gt;,
+## #   taxes_200 &lt;fct&gt;, taxes_40 &lt;fct&gt;, taxes_corp &lt;fct&gt;, spnd_hlth &lt;fct&gt;,
+## #   spnd_welf &lt;fct&gt;, spnd_educ &lt;fct&gt;, spnd_envi &lt;fct&gt;, …</code></pre>
+<p>Since by default, the ces data is not converted into a factor type, we first applied the function to_factor() to our ces2015_web data so that we can more easily work with it.
+With a total column space of 580, the data is much too large to efficienty work with so, using the select function, we created a new variable, ces2015_wev_wrk, which isolates the columns; province, attn_heal, attn_welf, attn_educ, attn_envi, attn_crim, vote_for, sat_govt, taxes, taxes_200, taxes_40
+The corresponding questions to these columns are:</p>
+<p>I felt that these questions were of high importance on a nationwide level and that policies regarding them would be most likely to draw in voters due to this importance, thus these are the questions we will progress with for this study.</p>
+<pre class="r"><code>ces2015_web_wrk &lt;- ces2015_web %&gt;%
+  filter(vote_for %in% c(&#39;The Conservative Party&#39;, &#39;The Liberal Party&#39;, &#39;The New Democratic Party&#39;))
+table(ces2015_web_wrk$vote_for)
+## 
+##   The Conservative Party        The Liberal Party The New Democratic Party 
+##                     1135                     1383                     1398 
+##       The Bloc Québécois          The Green Party              Other Party 
+##                        0                        0                        0 
+##            None of these        Will Spoil Ballot   Don&#39;t Know / Undecided 
+##                        0                        0                        0 
+##         Refuse to Answer       Don&#39;t Know/Refused    Seen But Not Answered 
+##                        0                        0                        0</code></pre>
+<p>Since there is a difference in the number of voters in each group, we must keep this in mind as we progress, being sure not to make any strong comparisons between the groups before bringing them down to relative terms.</p>
+<pre class="r"><code>ces2015_web_wrk_Con &lt;- ces2015_web %&gt;%
+  filter(vote_for == &#39;The Conservative Party&#39;)
+
+ces2015_web_wrk_Lib &lt;- ces2015_web %&gt;%
+  filter(vote_for == &#39;The Liberal Party&#39;)
+
+ces2015_web_wrk_Dem &lt;- ces2015_web %&gt;%
+  filter(vote_for == &#39;The New Democratic Party&#39;)
+
+ces2015_web_wrk_Al &lt;- ces2015_web %&gt;%
+  filter(province == &#39;Alberta&#39;)
+ces2015_web_wrk_On &lt;- ces2015_web %&gt;%
+  filter(province == &#39;Ontario&#39;)
+ces2015_web_wrk_BC &lt;- ces2015_web %&gt;%
+  filter(province == &#39;British Columbia&#39;)
+ces2015_web_wrk_Qu &lt;- ces2015_web %&gt;%
+  filter(province == &#39;Quebec&#39;)</code></pre>
+<p>Next, we split the data up according to what party each voter intends on voting for, using the most popular parties, we are left with three groups of voters, Conservative party voters, Liberal party voters, and New Democratic party voters. Using these cleaned datasets, we are now able to begin examining the results of each voter’s survey.</p>
+</div>
+<div id="experimental-data-analysis" class="section level1">
+<h1>Experimental Data Analysis</h1>
+<pre class="r"><code>ces2015_web_wrk %&gt;%
+  ggplot(aes(x = attn_educ, fill = vote_for)) + 
+  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;)</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>In our first graph, we examine responses to question attn_educ; ‘How much attention do you pay to education?’ As will be the case with the majority of these graphs, our data appears to be heavily skewed toward the first three responses, a lot, a little, and none which was to be expected.</p>
+<p>Organized first by their response, and second by the political party they intend to vote for, this grouped bar graph displays the quantity of each response recorded by the voters. The political parties being voted for are identified by color, with red representing the Conservative party, green representing the Liberal party, and blue representing the New Democratic party. As we can see, those who voted for the Liberal party and the New Democratic party responded saying they paid a lot of attention to education in the country in a higher proportion than those who vote for the Conservative Party.</p>
+<pre class="r"><code>ces2015_web_wrk %&gt;%
+  ggplot(aes(x = spnd_educ, fill = vote_for)) + 
+  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;, aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+POLICY POLICY POLCY POLICY</p>
+<pre class="r"><code>ces2015_web_wrk %&gt;%
+  ggplot(aes(x = attn_envi, fill = vote_for)) + 
+  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;)</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Our next graph displays the results to the question attn_envi; ‘How much attention do you pay to the environment?’ in a similar fashion to the first graph wherein voters were organized by both their response to this question, as well as vote_for; “QUESTION QUESTION QUESTION QUESTION QUESTION.”</p>
+<p>The results suggest to us a couple of things regarding each party; those voting for the Liberal party are quite mixed in their attention to the environment in the Country, NDP voters more often expressed a lot of attention the the environment, and Conservative voters most often displayed a little attention to the environment.</p>
+<p>These results can help to guide politicians and policymakers of each party when deciding on what policies to enact when elected. For example, given the turnout for Conservative Voters, the Conservative party should not, upon election, announce a POLICY POLICY POLICY POLICY POLICY POLICY POLICY, as this would not be as effective at keeping voter satisfaction high.</p>
+<pre class="r"><code>ces2015_web_wrk %&gt;%
+  ggplot(aes(x = spnd_envi, fill = vote_for)) + 
+  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;)</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>POLICY POLICY POLICY POLICY</p>
+<pre class="r"><code>ces2015_web_wrk %&gt;%
+  ggplot(aes(x = attn_heal, fill = vote_for)) + 
+  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;)</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+In this graph, results for the question attn_heal are displayed with the same method as the first again.</p>
+<p>this suggests to us that healthcare is of high importance to voters in each party as all three parties display the most votes for a lot of attention paid to healthcare.</p>
+<p>Based on this outcome, policymaakers are suggested to address healthcare in the country no matter what party they represent due to its high importance</p>
+<pre class="r"><code>ces2015_web_wrk %&gt;%
+  ggplot(aes(x = spnd_hlth, fill = vote_for)) + 
+  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;)</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+POLICY POLICY POLICY POLICY</p>
+<pre class="r"><code>ces2015_web_wrk %&gt;%
+  ggplot(aes(x = spnd_crim, fill = vote_for)) + 
+  geom_bar(color = &#39;black&#39;, position = &#39;dodge&#39;)</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_educ)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_educ)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-15-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_educ)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-15-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = spnd_educ)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = spnd_educ)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = spnd_educ)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-16-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_envi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_envi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_envi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-17-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = spnd_envi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = spnd_envi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-18-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = spnd_envi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-18-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_immg)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_immg)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-19-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_immg)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-19-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_heal)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_heal)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_heal)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-20-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = spnd_hlth)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = spnd_hlth)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-21-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = spnd_hlth)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-21-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_crim)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_crim)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_crim)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-22-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = spnd_crim)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = spnd_crim)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-23-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = spnd_crim)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-23-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = attn_defn)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = attn_defn)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-24-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = attn_defn)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-24-3.png" width="672" /></p>
+<pre class="r"><code>get_question(&#39;ces2015_web&#39;, &#39;p_iss_busi&#39;)
+## When businesses make a lot of money, everyone benefits, including the poor
+ces2015_web_wrk_Con %&gt;%
+  filter(is.na(p_iss_busi) == FALSE) %&gt;%
+  ggplot(aes(x = p_iss_busi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  filter(is.na(p_iss_busi) == FALSE) %&gt;%
+  ggplot(aes(x = p_iss_busi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-25-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  filter(is.na(p_iss_busi) == FALSE) %&gt;%
+  ggplot(aes(x = p_iss_busi)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-25-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  filter(p_pos_mino &lt; 101) %&gt;%
+  ggplot(aes(x = p_pos_mino)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  filter(p_pos_mino &lt; 101) %&gt;%
+  ggplot(aes(x = p_pos_mino)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-26-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  filter(p_pos_mino &lt; 101) %&gt;%
+  ggplot(aes(x = p_pos_mino)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-26-3.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Con %&gt;%
+  ggplot(aes(x = religion)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Lib %&gt;%
+  ggplot(aes(x = religion)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-27-2.png" width="672" /></p>
+<pre class="r"><code>ces2015_web_wrk_Dem %&gt;%
+  ggplot(aes(x = religion)) + 
+  geom_bar(aes(y = (..count..)/sum(..count..)))</code></pre>
+<p><img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/unnamed-chunk-27-3.png" width="672" /></p>
+<p>Discussion</p>
+</div>
+<div id="limitations" class="section level1">
+<h1>Limitations</h1>
+<p>The most apparent limitation of the dataset is the fact that it is a survey where not all answers can be checked for truthfulness. That is, we must rely on the people taking this survey to provide truthful answers that we can depend on for our analysis. With questions like ‘who did you vote for?’ or ‘who will you vote for?’ it would be very easy for someone taking this survey to either lie or change their decision which would affect the true outcome of this study. Since, however, there is no realistic way of checking for this type of thing, we must operate under the assumption that we are being provided with completely true data.
+Aside from people falsifying their answers to the survey, questions like ‘how much attention do you pay to the environment’ can be quite vague and possibly result in a number of people answering the question in different ways leading to inconsistent answers.
+The number of questions that were unanswered by voters also make it extremely difficult to get a full picture of what voters of each political party most want</p>
+<p>IF NOT DONE
+Being able to remove responses like ‘Seen but not answered’ would help to make the displays of data more full
+Additional factors I could have discussed could have helped provide more insight into what is most important to voters and what policymakers whouls focus on</p>
+</div>
+<div id="r-markdown" class="section level1">
+<h1>R Markdown</h1>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>You can embed an R code chunk like this:</p>
+<pre class="r"><code>summary(cars)
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+fit &lt;- lm(dist ~ speed, data = cars)
+fit
+## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932</code></pre>
+</div>
+<div id="including-plots" class="section level1">
+<h1>Including Plots</h1>
+<p>You can also embed plots. See Figure <a href="#fig:pie">1</a> for example:</p>
+<pre class="r"><code>par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c(&#39;Sky&#39;, &#39;Sunny side of pyramid&#39;, &#39;Shady side of pyramid&#39;),
+  col = c(&#39;#0292D8&#39;, &#39;#F7EA39&#39;, &#39;#C4B632&#39;),
+  init.angle = -50, border = NA
+)</code></pre>
+<div class="figure"><span id="fig:pie"></span>
+<img src="../../../../post/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png" alt="A fancy pie chart." width="672" />
+<p class="caption">
+Figure 1: A fancy pie chart.
+</p>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="../../../../js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
