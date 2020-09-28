@@ -52,7 +52,7 @@ get_cescodes()
 
 From the list of available ces studies, we chose ces2015_web as the study for this paper, this was mainly due to the rich variety of questions answered in this survey.
 
-```{r, include=FALSE}
+```{r}
 get_ces('ces2015_web')
 ```
 
@@ -247,5 +247,6 @@ http://dx.doi.org/10.21105/joss.00355>.
   
 # Appendix
 
-Code for this study can be found throughout the study. Sorry!
+Code for this study can be found at: https://github.com/jordanregis/TJRProjCode/blob/master/TJRProjCode.Rmd
+However, it was also displayed throughout the study due to my lack of knowledge working with GitHub repositories and general level of unsureness about whether or not it worked properly. Sorry!
 

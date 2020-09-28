@@ -57,6 +57,10 @@ The data gathered was the ces2015_web study from the cesR package. After some fi
 ## 21    21         ces1968         &quot;ces1968&quot;
 ## 22    22         ces1965         &quot;ces1965&quot;</code></pre>
 <p>From the list of available ces studies, we chose ces2015_web as the study for this paper, this was mainly due to the rich variety of questions answered in this survey.</p>
+<pre class="r"><code>get_ces(&#39;ces2015_web&#39;)
+## TO CITE THIS SURVEY FILE: Fournier, Patrick, Fred Cutler, Stuart Soroka and Dietlind Stolle. 2015. The 2015 Canadian Election Study. [dataset]
+## 
+## LINK: https://ces-eec.arts.ubc.ca/english-section/surveys/</code></pre>
 <pre class="r"><code>ces2015_web &lt;- to_factor(ces2015_web)
 head(ces2015_web)
 ## # A tibble: 6 x 580
@@ -273,7 +277,8 @@ devtools: Tools to Make Developing R Packages Easier.
 </div>
 <div id="appendix" class="section level1">
 <h1>Appendix</h1>
-<p>Code for this study can be found throughout the study. Sorry!</p>
+<p>Code for this study can be found at: <a href="https://github.com/jordanregis/TJRProjCode/blob/master/TJRProjCode.Rmd" class="uri">https://github.com/jordanregis/TJRProjCode/blob/master/TJRProjCode.Rmd</a>
+However, it was also displayed throughout the study due to my lack of knowledge working with GitHub repositories and general level of unsureness about whether or not it worked properly. Sorry!</p>
 <div id="refs" class="references">
 <div id="ref-citecesR">
 <p>Hodgetts, Paul A., and Rohan Alexander. 2020. <em>CesR: Access the Ces Datasets a Little Easier.</em></p>
