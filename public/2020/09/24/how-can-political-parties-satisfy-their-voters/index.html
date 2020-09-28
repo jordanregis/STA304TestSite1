@@ -90,8 +90,8 @@
 The data gathered was the ces2015_web study from the cesR package. After some filtering, the data was split into three groups according to each voter’s response to the question “Who are you likely to vote for?” with the groups being, NDP, Liberal, and Conservative voters. Then, multiple grouped bar graphs were created to display the frequency of voters’ responses to a variety of questions such as; “How much attention do you pay to education?”, and “Should the federal government spend more, less, or about the same amount of money on education?” By studying the outcomes, we are able to gain an understanding of what issues voters of each Party consider the most important. From this, we can begin to make suggestions to each Party about which policies they should enact to result in the highest voter satisfaction possible. In doing so, this can help to secure a political Party member’s position in office for multiple terms.</p>
 <p>Our findings suggested to us that; Liberal voters can be highly satisfied by increased funding in the education and health care sectors, NDP voters are quite satisfied with increases in funding to all of our chosen sectors, with health care appearing to be the most satisfying, and lastly, Conservative voters can gain the most satisfaction from increased funding to the health care sector of the country. Still, however, further research into the data must be done to determine definitive answers to what policies each Party should focus on enacting.</p>
 </div>
-<div id="data-identification" class="section level1">
-<h1>Data Identification</h1>
+<div id="data-development" class="section level1">
+<h1>Data Development</h1>
 <pre><code>##    index ces_survey_code get_ces_call_char
 ## 1      1     ces2019_web     &quot;ces2019_web&quot;
 ## 2      2   ces2019_phone   &quot;ces2019_phone&quot;
@@ -157,7 +157,7 @@ The data gathered was the ces2015_web study from the cesR package. After some fi
 ## #   spnd_welf &lt;fct&gt;, spnd_educ &lt;fct&gt;, spnd_envi &lt;fct&gt;, …</code></pre>
 <p>The ces2015_web data displays rows representing each voter’s list of responses to the questions in the survey, plus some data about how they operated the survey, including; browser type, start and finish times, and many more factors that likely won’t be effective in this study, so it will require some initial cleaning.</p>
 <p>Since by default, the ces data is not converted into a factor type, we first applied the function to_factor() from the labelled package to our ces2015_web data so that we can more easily work with it.
-With a total column space of 580, the data is much too large to efficiently work with so, using the select function, we created a new variable, ces2015_web_wrk, which isolates the columns; province, attn_heal, attn_educ, attn_envi, vote_for, spnd_heal, spnd_educ, and spnd_envi
+With a total column space of 580, the data is much too large to efficiently work with so, using the select function, we created a new variable, ces2015_web_wrk, which isolates the columns; province, attn_heal, attn_educ, attn_envi, vote_for, spnd_heal, spnd_educ, and spnd_envi.
 The corresponding questions to these columns are, in order:</p>
 <p>Which province or territory are you currently living in?
 How much attention do you pay to health care?
@@ -293,6 +293,8 @@ Springer-Verlag New York, 2016.</p>
 devtools: Tools to Make Developing R Packages Easier.
 <a href="https://devtools.r-lib.org/" class="uri">https://devtools.r-lib.org/</a>,
 <a href="https://github.com/r-lib/devtools" class="uri">https://github.com/r-lib/devtools</a>.</p>
+<p>cesR web file (ces2015_web) - Fournier, Patrick, Fred Cutler, Stuart Soroka and Dietlind Stolle. 2015. The 2015 Canadian Election Study. [dataset]
+LINK: <a href="https://ces-eec.arts.ubc.ca/english-section/surveys/" class="uri">https://ces-eec.arts.ubc.ca/english-section/surveys/</a></p>
 <p>(Note: It appears that below this line, the references have repeated themselves for a reason I could not work out)</p>
 <div id="refs" class="references">
 <div id="ref-citecesR">
